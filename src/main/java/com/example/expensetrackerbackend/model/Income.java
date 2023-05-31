@@ -37,4 +37,12 @@ public class Income {
     public void setIncome_amount(double income_amount) {
         this.income_amount = income_amount;
     }
+
+    @Override
+    public String toString() {
+        return "Income{" +
+                "id=" + id +
+                ", income_amount=" + income_amount +
+                '}';
+    }
 }
