@@ -11,6 +11,13 @@ public class Category {
     private Long id;
 
     @Column
-    private String name;
+    private String category_name;
 
+    public Category() {
+    }
+
+    public Category(Long id, String category_name) {
+        this.id = id;
+        this.category_name = category_name;
+    }
 }
