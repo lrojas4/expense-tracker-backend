@@ -20,4 +20,13 @@ public class Expense {
     @Column
     private String description;
 
+    public Expense() {
+    }
+
+    public Expense(Long id, Date date, double amount, String description) {
+        this.id = id;
+        this.date = date;
+        this.amount = amount;
+        this.description = description;
+    }
 }
