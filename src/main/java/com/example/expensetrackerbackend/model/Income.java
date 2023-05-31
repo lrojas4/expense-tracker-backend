@@ -1,5 +1,4 @@
 package com.example.expensetrackerbackend.model;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,4 +12,12 @@ public class Income {
 
     @Column
     private double income_amount;
+
+    public Income() {
+    }
+
+    public Income(Long id, double income_amount) {
+        this.id = id;
+        this.income_amount = income_amount;
+    }
 }
