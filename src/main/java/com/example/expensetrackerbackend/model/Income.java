@@ -20,4 +20,21 @@ public class Income {
         this.id = id;
         this.income_amount = income_amount;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getIncome_amount() {
+        return income_amount;
+    }
+
+    public void setIncome_amount(double income_amount) {
+        this.income_amount = income_amount;
+    }
 }
