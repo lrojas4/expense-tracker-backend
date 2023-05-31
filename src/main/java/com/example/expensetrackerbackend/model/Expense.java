@@ -61,4 +61,14 @@ public class Expense {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "id=" + id +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
