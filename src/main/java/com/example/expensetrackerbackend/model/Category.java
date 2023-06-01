@@ -1,5 +1,10 @@
 package com.example.expensetrackerbackend.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="categories")
@@ -12,6 +17,11 @@ public class Category {
 
     @Column
     private String category_name;
+
+    @OneToMany(mappedBy = "category")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
+    private List<Expense> expenseList;
 
     public Category() {
     }
