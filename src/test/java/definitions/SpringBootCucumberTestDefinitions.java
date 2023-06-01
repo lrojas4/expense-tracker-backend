@@ -37,5 +37,31 @@ public class SpringBootCucumberTestDefinitions {
 
     @Given("A list of expenses are available")
     public void aListOfExpensesAreAvailable() {
+        try {
+            ResponseEntity<String> response = new RestTemplate()
+                    .exchange(BASE_URL + port + "/api/expenses/", HttpMethod.GET, null, String.class);
+            List<Map<String, String>> expenses = JsonPath
+                    .from(String.valueOf(response
+                            .getBody()))
+                    .getList("$");
+            Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+            Assert.assertTrue(expenses != null);
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("I search for one expense by id")
+    public void iSearchForOneExpenseById() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        response = request.get(BASE_URL + port + "/api/expenses/1/");
+        Assert.assertNotNull(response.body());
+    }
+
+    @Then("expense is displayed")
+    public void expenseIsDisplayed() {
+        Assert.assertEquals(200, response.getStatusCode());
     }
 }

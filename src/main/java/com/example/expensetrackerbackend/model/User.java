@@ -77,6 +77,13 @@ public class User {
         this.password = password;
     }
 
+    public List<Income> getIncomeList() {
+        return incomeList;
+    }
+
+    public List<Expense> getExpenseList() {
+        return expenseList;
+    }
 
     @Override
     public String toString() {
