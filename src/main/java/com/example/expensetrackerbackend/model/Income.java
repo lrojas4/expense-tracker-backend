@@ -13,6 +13,10 @@ public class Income {
     @Column
     private double income_amount;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     public Income() {
     }
 
