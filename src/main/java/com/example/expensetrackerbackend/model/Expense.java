@@ -20,6 +20,14 @@ public class Expense {
     @Column
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
     public Expense() {
     }
 
@@ -60,6 +68,10 @@ public class Expense {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
