@@ -64,4 +64,13 @@ public class SpringBootCucumberTestDefinitions {
     public void expenseIsDisplayed() {
         Assert.assertEquals(200, response.getStatusCode());
     }
+
+    @When("I search for expenses by user")
+    public void iSearchForExpensesByUser() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        response = request.get(BASE_URL + port + "/api/expenses/user/1/");
+        Assert.assertNotNull(response.body());
+    }
 }
