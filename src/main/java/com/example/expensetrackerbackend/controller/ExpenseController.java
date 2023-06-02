@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/")
@@ -19,7 +20,7 @@ public class ExpenseController {
 
     /**
      * Calls on getExpenses() through expenseService
-     * @return List of expenses
+     * @return List of properties
      */
     @GetMapping(path = "/expenses/")
     public List<Expense> getExpenses() {
@@ -45,5 +46,36 @@ public class ExpenseController {
     @PostMapping(path = "/expenses/")
     public Optional<Expense> createExpense(@RequestBody Expense expenseObject) {
         return expenseService.createExpense(expenseObject);
+    }
+
+    /**
+     * Calls on updateExpense() from UpdateService
+     * @param expenseId expense id we are searching for
+     * @param expenseObject expense object we are updating
+     * @return an updated expense object
+     */
+    @PutMapping(path = "/expenses/{expenseId}/")
+    public Optional<Expense> updateExpense(@PathVariable Long expenseId, @RequestBody Expense expenseObject) {
+        return expenseService.updateExpense(expenseId,expenseObject);
+    }
+
+
+    /**
+     * Calls on getExpensesbyUserId() through expenseService
+     * @return List of expenses
+     */
+    @GetMapping(path = "/expenses/user/{userId}")
+    public List<Expense> getExpensesByUserId(@PathVariable Long userId) {
+        return expenseService.getExpenseByUserId(userId);
+    }
+
+    /**
+     * Calls on deleteExpense() from ExpenseService
+     * @param expenseId expense id we are searching for
+     * @return a String stating whether the deletion was successful, throws an exception otherwise.
+     */
+    @DeleteMapping(path = "/expenses/{expenseId}")
+    public String deleteExpense(@PathVariable Long expenseId) {
+        return expenseService.deleteExpense(expenseId);
     }
 }

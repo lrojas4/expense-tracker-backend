@@ -1,5 +1,4 @@
 package definitions;
-
 import com.example.expensetrackerbackend.ExpenseTrackerBackendApplication;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,9 +16,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -164,6 +161,22 @@ public class SpringBootCucumberTestDefinitions {
 
     @Then("The expense is updated")
     public void theExpenseIsUpdated() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
+
+    @When("I delete an expense from expense list")
+    public void iDeleteAnExpenseFromExpenseList() throws Exception {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        request.header("Content-Type", "application/json");
+        response = request.delete(BASE_URL + port + "/api/expenses/1/");
+    }
+
+
+    @Then("The expense is deleted")
+    public void theExpenseIsDeleted() {
         Assert.assertEquals(200, response.getStatusCode());
         Assert.assertNotNull(response.body());
     }

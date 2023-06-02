@@ -14,6 +14,10 @@ Feature: Rest API functionality
     Then the expense is added
     When I update an expense from my list of expenses
     Then The expense is updated
+    When I delete an expense from expense list
+    Then The expense is deleted
+
+
 
 
 
