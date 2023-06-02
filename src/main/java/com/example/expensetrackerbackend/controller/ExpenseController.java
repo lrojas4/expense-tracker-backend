@@ -1,12 +1,11 @@
 package com.example.expensetrackerbackend.controller;
-
-
 import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/")
@@ -35,5 +34,16 @@ public class ExpenseController {
     @GetMapping(path = "/expenses/{expenseId}/")
     public Expense getExpense(@PathVariable Long expenseId) {
         return expenseService.getExpense(expenseId);
+    }
+
+    /**
+     * Calls on createExpense() from ExpenseService and returns status 201 if successful
+     * @param expenseObject property we are adding
+     * @return an expense object that we have added
+     */
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/expenses/")
+    public Optional<Expense> createExpense(@RequestBody Expense expenseObject) {
+        return expenseService.createExpense(expenseObject);
     }
 }

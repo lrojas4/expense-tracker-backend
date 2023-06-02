@@ -1,5 +1,7 @@
 package com.example.expensetrackerbackend.model;
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,7 +14,7 @@ public class Expense {
     private Long id;
 
     @Column
-    private Date date;
+    private LocalDate date;
 
     @Column
     private double amount;
@@ -31,7 +33,7 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(Long id, Date date, double amount, String description) {
+    public Expense(Long id, LocalDate date, double amount, String description) {
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -46,11 +48,11 @@ public class Expense {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
