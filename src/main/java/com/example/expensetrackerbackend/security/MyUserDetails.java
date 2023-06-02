@@ -19,6 +19,11 @@ public class MyUserDetails implements UserDetails {
         return new HashSet<>();
     }
 
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
 
 
 
