@@ -33,4 +33,13 @@ public class JWTUtils {
                 .compact();
     }
 
+    /**
+     * Based on the generated jwt token, the users name will be displayed
+     * @param token generated jwt token during login
+     * @return name of user
+     */
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token).getBody().getSubject();
+    }
+
 }
