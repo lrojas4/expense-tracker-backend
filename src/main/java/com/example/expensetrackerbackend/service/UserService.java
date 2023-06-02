@@ -36,6 +36,15 @@ public class UserService {
     }
 
     /**
+     * Finds user by email address
+     * @param email address we are looking for
+     * @return user
+     */
+    public User findUserByEmailAddress(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    /**
      * Registers a new user if email is not currently being used.
      * @param userObject User's information to be saved with their profile.
      * @return A new user.
