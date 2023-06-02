@@ -57,14 +57,14 @@ public class UserService {
      * Registers a new user if email is not currently being used.
      * @param userObject User's information to be saved with their profile.
      * @return A new user.
-     * @throws InformationExistException if email is already in use with a different agent.
+     * @throws InformationExistException if email is already in use with a different user.
      */
-    public User registerAgent(User userObject) {
+    public User registerUser(User userObject) {
         if(!userRepository.existsByEmail(userObject.getEmail())) {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);
         } else {
-            throw new InformationExistException("An agent with email " + userObject.getEmail() + " already exists.");
+            throw new InformationExistException("A user with email " + userObject.getEmail() + " already exists.");
         }
     }
 
