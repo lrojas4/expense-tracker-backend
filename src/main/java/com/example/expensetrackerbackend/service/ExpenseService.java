@@ -1,5 +1,6 @@
 package com.example.expensetrackerbackend.service;
 import com.example.expensetrackerbackend.exception.InformationExistException;
+import com.example.expensetrackerbackend.exception.InformationNotFoundException;
 import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.User;
 import com.example.expensetrackerbackend.repository.ExpenseRepository;
@@ -57,5 +58,24 @@ public class ExpenseService {
     public Optional<Expense> createExpense(Expense expenseObject) {
         expenseObject.setUser(ExpenseService.getCurrentLoggedInUser());
         return Optional.of(expenseRepository.save(expenseObject));
+    }
+
+    /**
+     * Updates expense object
+     * @param expenseId expense id we are updating
+     * @param expenseObject expense object we are updating to
+     * @return updated expense
+     * @throws InformationNotFoundException if property address not found
+     */
+    public Optional<Expense> updateExpense(Long expenseId, Expense expenseObject) {
+        Optional<Expense> expense = expenseRepository.findByIdAndUserId(expenseId, ExpenseService.getCurrentLoggedInUser().getId());
+        if(expense.isPresent()){
+            expense.get().setDate(expenseObject.getDate());
+            expense.get().setAmount(expenseObject.getAmount());
+            expense.get().setDescription(expenseObject.getDescription());
+            return Optional.of(expenseRepository.save(expense.get()));
+        } else {
+            throw new InformationNotFoundException("Expense with id " + expenseObject.getId() + " doesn't exist");
+        }
     }
 }

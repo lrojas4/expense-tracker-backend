@@ -46,4 +46,17 @@ public class ExpenseController {
     public Optional<Expense> createExpense(@RequestBody Expense expenseObject) {
         return expenseService.createExpense(expenseObject);
     }
+
+    /**
+     * Calls on updateExpense() from UpdateService
+     * @param expenseId expense id we are searching for
+     * @param expenseObject expense object we are updating
+     * @return an updated expense object
+     */
+    @PutMapping(path = "/expenses/{expenseId}/")
+    public Optional<Expense> updateExpense(@PathVariable Long expenseId, @RequestBody Expense expenseObject) {
+        return expenseService.updateExpense(expenseId,expenseObject);
+    }
+
+
 }
