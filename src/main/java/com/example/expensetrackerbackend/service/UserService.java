@@ -1,14 +1,22 @@
 package com.example.expensetrackerbackend.service;
-
 import com.example.expensetrackerbackend.exception.InformationExistException;
 import com.example.expensetrackerbackend.model.User;
+import com.example.expensetrackerbackend.model.request.LoginRequest;
+import com.example.expensetrackerbackend.model.response.LoginResponse;
 import com.example.expensetrackerbackend.repository.UserRepository;
 import com.example.expensetrackerbackend.security.JWTUtils;
 import com.example.expensetrackerbackend.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UserService {
@@ -21,8 +29,9 @@ public class UserService {
 
     private MyUserDetails myUserDetails;
 
-    public UserService(UserRepository userRepository, AuthenticationManager authenticationManager,
-                       PasswordEncoder passwordEncoder, JWTUtils jwtUtils, MyUserDetails myUserDetails) {
+    @Autowired
+    public UserService(UserRepository userRepository, @Lazy AuthenticationManager authenticationManager,
+                       @Lazy PasswordEncoder passwordEncoder, JWTUtils jwtUtils, @Lazy MyUserDetails myUserDetails) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -68,6 +77,22 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
+    /**
+     * Logs in user with credentials given by user.
+     * @param loginRequest The credentials to log in.
+     * @return Authenticated user.
+     */
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            myUserDetails = (MyUserDetails) authentication.getPrincipal();
 
-
+            final String JWT = jwtUtils.generateJwtToken(myUserDetails);
+            return ResponseEntity.ok(new LoginResponse(JWT));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Error: username or password is incorrect"));
+        }
+    }
 }
