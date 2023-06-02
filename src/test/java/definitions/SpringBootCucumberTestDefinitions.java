@@ -1,5 +1,4 @@
 package definitions;
-
 import com.example.expensetrackerbackend.ExpenseTrackerBackendApplication;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,9 +16,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
