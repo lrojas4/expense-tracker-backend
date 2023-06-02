@@ -19,12 +19,12 @@ public class ExpenseController {
     }
 
     /**
-     * Calls on getExpensesbyUserId() through expenseService
-     * @return List of expenses
+     * Calls on getExpenses() through expenseService
+     * @return List of properties
      */
-    @GetMapping(path = "/expenses/user/{userId}")
-    public List<Expense> getExpensesByUserId(@PathVariable Long userId) {
-        return expenseService.getExpenseByUserId(userId);
+    @GetMapping(path = "/expenses/")
+    public List<Expense> getExpenses() {
+        return expenseService.getExpenses();
     }
 
     /**
@@ -60,4 +60,22 @@ public class ExpenseController {
     }
 
 
+    /**
+     * Calls on getExpensesbyUserId() through expenseService
+     * @return List of expenses
+     */
+    @GetMapping(path = "/expenses/user/{userId}")
+    public List<Expense> getExpensesByUserId(@PathVariable Long userId) {
+        return expenseService.getExpenseByUserId(userId);
+    }
+
+    /**
+     * Calls on deleteExpense() from ExpenseService
+     * @param expenseId expense id we are searching for
+     * @return a String stating whether the deletion was successful, throws an exception otherwise.
+     */
+    @DeleteMapping(path = "/expenses/{expenseId}")
+    public String deleteExpense(@PathVariable Long expenseId) {
+        return expenseService.deleteExpense(expenseId);
+    }
 }

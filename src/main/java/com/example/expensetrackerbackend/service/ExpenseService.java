@@ -24,6 +24,14 @@ public class ExpenseService {
     }
 
     /**
+     * Gets a list of expenses
+     * @return a list of expenses
+     */
+    public List<Expense> getExpenses() {
+        return expenseRepository.findAll();
+    }
+
+    /**
      * Get the current logged-in user from jwt
      * @return logged-in user
      */
@@ -79,6 +87,22 @@ public class ExpenseService {
             return Optional.of(expenseRepository.save(expense.get()));
         } else {
             throw new InformationNotFoundException("Expense with id " + expenseObject.getId() + " doesn't exist");
+        }
+    }
+
+    /**
+     * Deletes expense by expense id
+     * @param expenseId expense id we are deleting
+     * @return a String stating whether it was successfully deleted if expense id exists
+     * @throws InformationNotFoundException if expense id does not exist
+     */
+    public String deleteExpense(Long expenseId) {
+        Optional<Expense> expense = expenseRepository.findByIdAndUserId(expenseId, ExpenseService.getCurrentLoggedInUser().getId());
+        if(expense.isPresent()) {
+            expenseRepository.deleteById(expenseId);
+            return "Expense with id " + expenseId + " was deleted";
+        } else {
+            throw new InformationNotFoundException("Expense with id: " + expenseId + " doesn't exist");
         }
     }
 }
