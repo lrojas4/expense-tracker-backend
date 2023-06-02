@@ -2,8 +2,13 @@ package com.example.expensetrackerbackend.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -24,6 +29,29 @@ public class SecurityConfiguration {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * Creates a SecurityFilterChain object for the specified HttpSecurity object.
+     * This filter chain authorizes requests based on users authentication,
+     * allowing access to certain endpoints without authentication.
+     * @param http an HttpSecurity object representing the HTTP security configuration for the application
+     * @return a SecurityFilterChain object representing the security filter chain for the HTTP requests
+     * @throws Exception Exception if an error occurs while creating the filter chain
+     */
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/auth/register/", "/auth/login/")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/expenses/", "/api/expenses/{expensesId}/",
+                        "/api/expenses/user/{userId}/" )
+                .permitAll()
+                .anyRequest().authenticated()
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().csrf().disable();
+        http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
 
 }
