@@ -59,6 +59,15 @@ public class UserService {
         }
     }
 
+    /**
+     * Finds an user by their email address.
+     * @param email The email that we're searching for.
+     * @return User associated with email.
+     */
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
 
 
 }
