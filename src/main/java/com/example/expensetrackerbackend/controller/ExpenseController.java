@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/")
@@ -18,12 +19,12 @@ public class ExpenseController {
     }
 
     /**
-     * Calls on getExpenses() through expenseService
+     * Calls on getExpensesbyUserId() through expenseService
      * @return List of expenses
      */
-    @GetMapping(path = "/expenses/")
-    public List<Expense> getExpenses() {
-        return expenseService.getExpenses();
+    @GetMapping(path = "/expenses/user/{userId}")
+    public List<Expense> getExpensesByUserId(@PathVariable Long userId) {
+        return expenseService.getExpenseByUserId(userId);
     }
 
     /**

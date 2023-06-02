@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExpenseService {
@@ -32,11 +33,13 @@ public class ExpenseService {
     }
 
     /**
-     * Gets a list of expenses
-     * @return a list of expenses
+     * Filters a list of expenses by user id
+     * @param userId we are searching for
+     * @return a list of expenses based on user id
      */
-    public List<Expense> getExpenses() {
-        return expenseRepository.findAll();
+    public List<Expense> getExpenseByUserId(Long userId){
+        return expenseRepository.findAll().stream().filter(expense -> expense.getUser().getId() == userId)
+                .collect(Collectors.toList());
     }
 
     /**
