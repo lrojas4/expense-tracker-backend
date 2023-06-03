@@ -180,4 +180,46 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(200, response.getStatusCode());
         Assert.assertNotNull(response.body());
     }
+
+    @Given("A list of incomes are available")
+    public void aListOfIncomesAreAvailable() {
+        try {
+            ResponseEntity<String> response = new RestTemplate()
+                    .exchange(BASE_URL + port + "/api/incomes/", HttpMethod.GET, null, String.class);
+            List<Map<String, String>> expenses = JsonPath
+                    .from(String.valueOf(response
+                            .getBody()))
+                    .getList("$");
+            Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+            Assert.assertTrue(expenses != null);
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("I search for one income by id")
+    public void iSearchForOneIncomeById() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        response = request.get(BASE_URL + port + "/api/incomes/1/");
+        Assert.assertNotNull(response.body());
+    }
+
+    @When("I search for incomes by user")
+    public void iSearchForIncomesByUser() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        request.header("Content-Type", "application/json");
+        response = request.get(BASE_URL + port + "/api/incomes/");
+        Assert.assertNotNull(response.body());
+    }
+
+    @Then("A list of incomes is displayed")
+    public void aListOfIncomesIsDisplayed() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
+
 }
