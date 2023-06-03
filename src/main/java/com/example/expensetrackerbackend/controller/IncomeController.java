@@ -1,13 +1,13 @@
 package com.example.expensetrackerbackend.controller;
+import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.Income;
 import com.example.expensetrackerbackend.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/api/")
@@ -47,5 +47,16 @@ public class IncomeController {
     @GetMapping(path = "/incomes/user/{userId}")
     public List<Income> getIncomesByUserId(@PathVariable Long userId) {
         return incomeService.getIncomesByUserId(userId);
+    }
+
+    /**
+     * Calls on createIncome() from IncomeService and returns status 201 if successful
+     * @param incomeObject property we are adding
+     * @return an income object that we have added
+     */
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/incomes/")
+    public Optional<Income> createIncome(@RequestBody Income incomeObject) {
+        return incomeService.createIncome(incomeObject);
     }
 }
