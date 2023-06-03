@@ -1,9 +1,15 @@
 package com.example.expensetrackerbackend.service;
+import com.example.expensetrackerbackend.exception.InformationExistException;
+import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.Income;
+import com.example.expensetrackerbackend.model.User;
 import com.example.expensetrackerbackend.repository.IncomeRepository;
+import com.example.expensetrackerbackend.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,6 +20,15 @@ public class IncomeService {
     @Autowired
     public void setIncomeRepository(IncomeRepository incomeRepository) {
         this.incomeRepository = incomeRepository;
+    }
+
+    /**
+     * Get the current logged-in user from jwt
+     * @return logged-in user
+     */
+    public static User getCurrentLoggedInUser(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser();
     }
 
     /**
@@ -42,5 +57,16 @@ public class IncomeService {
     public List<Income> getIncomesByUserId(Long userId) {
         return incomeRepository.findAll().stream().filter(income -> income.getUser().getId() == userId)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Creates income object
+     * @param incomeObject income object being added
+     * @return the added income object
+     * @throws InformationExistException if income already exists
+     */
+    public Optional<Income> createIncome(Income incomeObject) {
+        incomeObject.setUser(IncomeService.getCurrentLoggedInUser());
+        return Optional.of(incomeRepository.save(incomeObject));
     }
 }
