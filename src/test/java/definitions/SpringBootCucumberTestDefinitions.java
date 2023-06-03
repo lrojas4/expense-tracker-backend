@@ -227,4 +227,20 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertNotNull(response.body());
     }
 
+    @When("I add an income to my income list")
+    public void iAddAnIncomeToMyIncomeList() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("income_amount", 8000.00);
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/incomes/");
+    }
+
+
+    @Then("The income is added")
+    public void theIncomeIsAdded() {
+        Assert.assertEquals(201, response.getStatusCode());
+    }
 }

@@ -23,6 +23,8 @@ Feature: Rest API functionality
     Then The income is displayed
     When I search for incomes by user
     Then A list of incomes is displayed
+    When I add an income to my income list
+    Then The income is added
 
 
 
