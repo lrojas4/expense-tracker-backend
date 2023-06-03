@@ -17,6 +17,13 @@ Feature: Rest API functionality
     When I delete an expense from expense list
     Then The expense is deleted
 
+  Scenario: User is able to add, update, and delete income entry
+    Given A list of incomes are available
+    When I search for one income by id
+    When I search for incomes by user
+    Then A list of incomes is displayed
+
+
 
 
 

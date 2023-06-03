@@ -25,7 +25,6 @@ public class Income {
         this.income_amount = income_amount;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -40,6 +39,10 @@ public class Income {
 
     public void setIncome_amount(double income_amount) {
         this.income_amount = income_amount;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override
