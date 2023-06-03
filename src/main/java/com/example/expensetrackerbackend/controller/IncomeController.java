@@ -1,5 +1,4 @@
 package com.example.expensetrackerbackend.controller;
-import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.Income;
 import com.example.expensetrackerbackend.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,16 @@ public class IncomeController {
     @GetMapping(path = "/incomes/")
     public List<Income> getIncomes() {
         return incomeService.getIncomes();
+    }
+
+    /**
+     * Calls on getIncome() from IncomeService
+     * @param incomeId income id we are searching for
+     * @return an income based on income id
+     */
+    @GetMapping(path = "/incomes/{incomeId}/")
+    public Income getExpense(@PathVariable Long incomeId) {
+        return incomeService.getIncome(incomeId);
     }
 
 
