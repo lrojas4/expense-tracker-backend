@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/")
@@ -61,7 +60,7 @@ public class ExpenseController {
 
 
     /**
-     * Calls on getExpensesbyUserId() through expenseService
+     * Calls on getExpensesByUserId() through expenseService
      * @return List of expenses
      */
     @GetMapping(path = "/expenses/user/{userId}")
