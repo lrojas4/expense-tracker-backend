@@ -206,6 +206,11 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertNotNull(response.body());
     }
 
+    @Then("The income is displayed")
+    public void theIncomeIsDisplayed() {
+        Assert.assertEquals(200, response.getStatusCode());
+    }
+
     @When("I search for incomes by user")
     public void iSearchForIncomesByUser() throws JSONException {
         RestAssured.baseURI = BASE_URL;
