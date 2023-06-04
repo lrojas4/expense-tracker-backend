@@ -39,6 +39,16 @@ public class IncomeController {
         return incomeService.getIncome(incomeId);
     }
 
+    /**
+     * Calls on createIncome() from IncomeService and returns status 201 if successful
+     * @param incomeObject property we are adding
+     * @return an income object that we have added
+     */
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/incomes/")
+    public Optional<Income> createIncome(@RequestBody Income incomeObject) {
+        return incomeService.createIncome(incomeObject);
+    }
 
     /**
      * Calls on getIncomesByUserId() through incomeService
@@ -50,13 +60,13 @@ public class IncomeController {
     }
 
     /**
-     * Calls on createIncome() from IncomeService and returns status 201 if successful
-     * @param incomeObject property we are adding
-     * @return an income object that we have added
+     * Calls on updateIncome() from IncomeService
+     * @param incomeId income id we are searching for
+     * @param incomeObject income object we are updating
+     * @return an updated income object
      */
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "/incomes/")
-    public Optional<Income> createIncome(@RequestBody Income incomeObject) {
-        return incomeService.createIncome(incomeObject);
+    @PutMapping(path = "/incomes/{incomeId}/")
+    public Optional<Income> updateIncome(@PathVariable Long incomeId, @RequestBody Income incomeObject) {
+        return incomeService.updateIncome(incomeId,incomeObject);
     }
 }
