@@ -206,6 +206,11 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertNotNull(response.body());
     }
 
+    @Then("The income is displayed")
+    public void theIncomeIsDisplayed() {
+        Assert.assertEquals(200, response.getStatusCode());
+    }
+
     @When("I search for incomes by user")
     public void iSearchForIncomesByUser() throws JSONException {
         RestAssured.baseURI = BASE_URL;
@@ -222,4 +227,37 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertNotNull(response.body());
     }
 
+    @When("I add an income to my income list")
+    public void iAddAnIncomeToMyIncomeList() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("income_amount", 8000.00);
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/incomes/");
+    }
+
+
+    @Then("The income is added")
+    public void theIncomeIsAdded() {
+        Assert.assertEquals(201, response.getStatusCode());
+    }
+
+    @When("I update an income from my list of incomes")
+    public void iUpdateAnIncomeFromMyListOfIncomes() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("income_amount", 4000.00);
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/incomes/1/");
+    }
+
+    @Then("The income is updated")
+    public void theIncomeIsUpdated() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
 }

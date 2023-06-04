@@ -48,7 +48,7 @@ public class ExpenseController {
     }
 
     /**
-     * Calls on updateExpense() from UpdateService
+     * Calls on updateExpense() from ExpenseService
      * @param expenseId expense id we are searching for
      * @param expenseObject expense object we are updating
      * @return an updated expense object

@@ -1,18 +1,21 @@
 package com.example.expensetrackerbackend.seed;
 import com.example.expensetrackerbackend.model.Expense;
+import com.example.expensetrackerbackend.model.Income;
 import com.example.expensetrackerbackend.model.User;
 import com.example.expensetrackerbackend.repository.ExpenseRepository;
+import com.example.expensetrackerbackend.repository.IncomeRepository;
 import com.example.expensetrackerbackend.repository.UserRepository;
 import com.example.expensetrackerbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
-import java.util.Date;
+
 
 @Component
 public class DataLoader implements CommandLineRunner {
+    @Autowired
+    IncomeRepository incomeRepository;
 
     @Autowired
     ExpenseRepository expenseRepository;
@@ -54,6 +57,26 @@ public class DataLoader implements CommandLineRunner {
             expenseRepository.save(expense3);
             expenseRepository.save(expense4);
             expenseRepository.save(expense5);
+
+            Income income1 = new Income(1L, 2000.00);
+            Income income2 = new Income(2L, 3000.00);
+            Income income3 = new Income(3L, 7000.00);
+            Income income4 = new Income(4L, 5000.00);
+            Income income5 = new Income(5L, 1000.00);
+
+            income1.setUser(user1);
+            income2.setUser(user1);
+            income3.setUser(user2);
+            income4.setUser(user3);
+            income5.setUser(user3);
+
+            incomeRepository.save(income1);
+            incomeRepository.save(income2);
+            incomeRepository.save(income3);
+            incomeRepository.save(income4);
+            incomeRepository.save(income5);
+
+
         }
     }
 }

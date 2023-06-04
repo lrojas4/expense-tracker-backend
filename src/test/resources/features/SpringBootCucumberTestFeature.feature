@@ -20,8 +20,14 @@ Feature: Rest API functionality
   Scenario: User is able to add, update, and delete income entry
     Given A list of incomes are available
     When I search for one income by id
+    Then The income is displayed
     When I search for incomes by user
     Then A list of incomes is displayed
+    When I add an income to my income list
+    Then The income is added
+    When I update an income from my list of incomes
+    Then The income is updated
+
 
 
 
