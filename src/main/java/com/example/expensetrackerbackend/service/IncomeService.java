@@ -1,5 +1,6 @@
 package com.example.expensetrackerbackend.service;
 import com.example.expensetrackerbackend.exception.InformationExistException;
+import com.example.expensetrackerbackend.exception.InformationNotFoundException;
 import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.Income;
 import com.example.expensetrackerbackend.model.User;
@@ -68,5 +69,22 @@ public class IncomeService {
     public Optional<Income> createIncome(Income incomeObject) {
         incomeObject.setUser(IncomeService.getCurrentLoggedInUser());
         return Optional.of(incomeRepository.save(incomeObject));
+    }
+
+    /**
+     * Updates income object
+     * @param incomeId income id we are updating
+     * @param incomeObject income object we are updating to
+     * @return updated income
+     * @throws InformationNotFoundException if property address not found
+     */
+    public Optional<Income> updateIncome(Long incomeId, Income incomeObject) {
+        Optional<Income> income = incomeRepository.findByIdAndUserId(incomeId, IncomeService.getCurrentLoggedInUser().getId());
+        if(income.isPresent()){
+            income.get().setIncome_amount(incomeObject.getIncome_amount());
+            return Optional.of(incomeRepository.save(income.get()));
+        } else {
+            throw new InformationNotFoundException("Income with id " + incomeObject.getId() + " doesn't exist");
+        }
     }
 }
