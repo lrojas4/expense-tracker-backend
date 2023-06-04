@@ -51,7 +51,7 @@ public class SecurityConfiguration {
         http.authorizeRequests().antMatchers("/auth/register/", "/auth/login/")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/expenses/", "/api/expenses/{expensesId}/",
-                        "/api/expenses/user/{userId}/", "/api/incomes/user/{userId}",
+                        "/api/expenses/user/{userId}/", "/api/incomes/user/{userId}/",
                         "/api/incomes/", "/api/incomes/{incomeId}/")
                 .permitAll()
                 .anyRequest().authenticated()

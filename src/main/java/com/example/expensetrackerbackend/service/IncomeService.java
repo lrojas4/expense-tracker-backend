@@ -87,4 +87,20 @@ public class IncomeService {
             throw new InformationNotFoundException("Income with id " + incomeObject.getId() + " doesn't exist");
         }
     }
+
+    /**
+     * Deletes income by income id
+     * @param incomeId income id we are deleting
+     * @return a String stating whether it was successfully deleted if expense id exists
+     * @throws InformationNotFoundException if expense id does not exist
+     */
+    public String deleteIncome(Long incomeId) {
+        Optional<Income> income = incomeRepository.findByIdAndUserId(incomeId, IncomeService.getCurrentLoggedInUser().getId());
+        if(income.isPresent()) {
+            incomeRepository.deleteById(incomeId);
+            return "Income with id " + incomeId + " was deleted";
+        } else {
+            throw new InformationNotFoundException("Income with id: " + incomeId + " doesn't exist");
+        }
+    }
 }

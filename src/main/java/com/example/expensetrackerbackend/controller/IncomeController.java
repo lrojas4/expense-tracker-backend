@@ -1,11 +1,9 @@
 package com.example.expensetrackerbackend.controller;
-import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.Income;
 import com.example.expensetrackerbackend.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -51,15 +49,6 @@ public class IncomeController {
     }
 
     /**
-     * Calls on getIncomesByUserId() through incomeService
-     * @return List of incomes
-     */
-    @GetMapping(path = "/incomes/user/{userId}")
-    public List<Income> getIncomesByUserId(@PathVariable Long userId) {
-        return incomeService.getIncomesByUserId(userId);
-    }
-
-    /**
      * Calls on updateIncome() from IncomeService
      * @param incomeId income id we are searching for
      * @param incomeObject income object we are updating
@@ -69,4 +58,24 @@ public class IncomeController {
     public Optional<Income> updateIncome(@PathVariable Long incomeId, @RequestBody Income incomeObject) {
         return incomeService.updateIncome(incomeId,incomeObject);
     }
+
+    /**
+     * Calls on getIncomesByUserId() through incomeService
+     * @return List of incomes
+     */
+    @GetMapping(path = "/incomes/user/{userId}")
+    public List<Income> getIncomesByUserId(@PathVariable Long userId) {
+        return incomeService.getIncomesByUserId(userId);
+    }
+
+    /**
+     * Calls on deleteIncome() from IncomeService
+     * @param incomeId income id we are searching for
+     * @return a String stating whether the deletion was successful, throws an exception otherwise.
+     */
+    @DeleteMapping(path = "/incomes/{incomeId}")
+    public String deleteIncome(@PathVariable Long incomeId) {
+        return incomeService.deleteIncome(incomeId);
+    }
+
 }

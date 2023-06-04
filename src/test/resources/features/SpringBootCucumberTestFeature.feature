@@ -27,6 +27,8 @@ Feature: Rest API functionality
     Then The income is added
     When I update an income from my list of incomes
     Then The income is updated
+    When I delete an income from income list
+    Then The income is deleted
 
 
 
