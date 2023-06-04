@@ -260,4 +260,19 @@ public class SpringBootCucumberTestDefinitions {
         Assert.assertEquals(200, response.getStatusCode());
         Assert.assertNotNull(response.body());
     }
+
+    @When("I delete an income from income list")
+    public void iDeleteAnIncomeFromIncomeList() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        request.header("Content-Type", "application/json");
+        response = request.delete(BASE_URL + port + "/api/incomes/1/");
+    }
+
+    @Then("The income is deleted")
+    public void theIncomeIsDeleted() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
 }
