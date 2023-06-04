@@ -243,4 +243,21 @@ public class SpringBootCucumberTestDefinitions {
     public void theIncomeIsAdded() {
         Assert.assertEquals(201, response.getStatusCode());
     }
+
+    @When("I update an income from my list of incomes")
+    public void iUpdateAnIncomeFromMyListOfIncomes() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("income_amount", 4000.00);
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/incomes/1/");
+    }
+
+    @Then("The income is updated")
+    public void theIncomeIsUpdated() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
 }

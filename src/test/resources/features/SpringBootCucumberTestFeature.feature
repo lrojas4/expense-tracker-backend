@@ -25,6 +25,9 @@ Feature: Rest API functionality
     Then A list of incomes is displayed
     When I add an income to my income list
     Then The income is added
+    When I update an income from my list of incomes
+    Then The income is updated
+
 
 
 
