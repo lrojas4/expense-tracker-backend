@@ -66,6 +66,7 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 | GET          | /api/categories/{categoryId}/expenses/ | Gets expenses by category id | Private |
 
 ## Planning Documentation
+<img src="planning.png" style="height: 30rem;">
 
 ## Dependencies
 ```
