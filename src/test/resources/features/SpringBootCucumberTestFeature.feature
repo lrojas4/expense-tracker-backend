@@ -29,6 +29,8 @@ Feature: Rest API functionality
     Then The income is updated
     When I delete an income from income list
     Then The income is deleted
+    When I search for expenses by category id
+    Then A list of expenses by category is displayed
 
 
 
