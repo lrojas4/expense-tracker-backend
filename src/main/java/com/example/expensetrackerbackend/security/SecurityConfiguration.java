@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,6 +41,11 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/h2-console/**");
+    }
+
     /**
      * Creates a SecurityFilterChain object for the specified HttpSecurity object.
      * This filter chain authorizes requests based on users authentication,
@@ -51,10 +57,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/auth/register/", "/auth/login/")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/expenses/", "/api/expenses/{expensesId}/",
-                        "/api/expenses/user/{userId}/", "/api/incomes/user/{userId}/",
-                        "/api/incomes/", "/api/incomes/{incomeId}/", "/api/categories/")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
