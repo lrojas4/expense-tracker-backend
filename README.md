@@ -20,10 +20,14 @@ This is a full-stack expense tracker application where users are able to add the
 
 ## Tools and Technologies
 
-- Java
-- IntelliJ - IDE
-- Spring Boot
-- Cucumber Spring Integration
+* Java
+* IntelliJ - IDE
+* Spring Boot
+* JPA
+* JWT
+* Maven
+* Postman
+* Cucumber Spring Integration
 
 ## User Stories
 
