@@ -13,7 +13,7 @@
 - [Acknowledgements](#acknowledgements)
 
 ## Overview
-This is a full-stack expense tracker application where users are able to add their income, as well as, add, update, view, and delete their expenses. It categorizes expenses by categories and allows users to better analyze their spending patterns.
+This is a full-stack expense tracker application where users are able to add, update, view, and delete their income and expenses. It categorizes expenses by categories and allows users to better analyze their spending patterns.
 
 ## Approach
 I first began by brainstorming the models needed (User, Expense, Income, and Category). Once models were decided on I created and ERD diagram showing the one-to-many and many-to-one relationships between the models and writing User Stories.
