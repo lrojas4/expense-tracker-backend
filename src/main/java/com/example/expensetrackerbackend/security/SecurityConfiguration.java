@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -52,7 +54,7 @@ public class SecurityConfiguration {
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/expenses/", "/api/expenses/{expensesId}/",
                         "/api/expenses/user/{userId}/", "/api/incomes/user/{userId}/",
-                        "/api/incomes/", "/api/incomes/{incomeId}/")
+                        "/api/incomes/", "/api/incomes/{incomeId}/", "/api/categories/")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
@@ -94,5 +96,21 @@ public class SecurityConfiguration {
     public MyUserDetails myUserDetails() {
         return (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
+    }
+
+    @Configuration
+    public class CorsConfig {
+        @Bean
+        public WebMvcConfigurer corsConfigurer() {
+            return new WebMvcConfigurer() {
+                @Override
+                public void addCorsMappings(CorsRegistry registry) {
+                    registry.addMapping("/**")
+                            .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                            .allowedHeaders("*")
+                            .allowedOrigins("*");
+                }
+            };
+        }
     }
 }
