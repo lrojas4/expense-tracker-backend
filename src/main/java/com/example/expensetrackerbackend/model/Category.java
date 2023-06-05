@@ -1,5 +1,4 @@
 package com.example.expensetrackerbackend.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -20,7 +19,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnore
     private List<Expense> expenseList;
 
     public Category() {
@@ -45,6 +43,17 @@ public class Category {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    public List<Expense> getExpenseList() {
+        return expenseList;
+    }
+
+    public void setExpenseList(List<Expense> expenseList) {
+        this.expenseList = expenseList;
+    }
+
+    public void setExpense(Expense expense) {
     }
 
     @Override
