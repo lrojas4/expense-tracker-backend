@@ -39,7 +39,6 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 - As a user, I want to be able to delete an expense entry that is no longer needed.
 - As a user, I want to be able to view expenses by category so that I can better analyze my spending patterns.
 - As a user, I want to be able to search for specific expenses based on keywords, date, or category.
-- As a user, I want to be able to create a new income entry so that I can set a spending limit.
 - As a user, I want to be able to view a list of incomes. 
 - As a user, I want to be able to update an income entry if needed.
 - As a user, I want to be able to delete an income entry that is no longer needed.
