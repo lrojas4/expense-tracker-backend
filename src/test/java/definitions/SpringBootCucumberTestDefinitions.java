@@ -275,7 +275,7 @@ public class SpringBootCucumberTestDefinitions {
         String jwtKey = getSecurityKey();
         RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
         request.header("Content-Type", "application/json");
-        response = request.get(BASE_URL + port + "/api/category/1/expenses/");
+        response = request.get(BASE_URL + port + "/api/categories/1/expenses/");
 
     }
 
