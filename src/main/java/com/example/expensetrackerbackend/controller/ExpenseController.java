@@ -1,4 +1,5 @@
 package com.example.expensetrackerbackend.controller;
+import com.example.expensetrackerbackend.model.Category;
 import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,6 @@ public class ExpenseController {
         return expenseService.updateExpense(expenseId,expenseObject);
     }
 
-
     /**
      * Calls on getExpensesByUserId() through expenseService
      * @return List of expenses
@@ -76,5 +76,16 @@ public class ExpenseController {
     @DeleteMapping(path = "/expenses/{expenseId}")
     public String deleteExpense(@PathVariable Long expenseId) {
         return expenseService.deleteExpense(expenseId);
+    }
+
+    /**
+     * Calls getExpenseByCategoryId() from ExpenseService
+     * @param categoryId category id we are searching for
+     * @return a list of expenses by category id
+     */
+    @GetMapping(path = "/category/{categoryId}/expenses/")
+    public List<Expense> getExpensesByCategoryId(@PathVariable Long categoryId) {
+        return expenseService.getExpensesByCategoryId(categoryId);
+
     }
 }
