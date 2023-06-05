@@ -1,7 +1,9 @@
 package com.example.expensetrackerbackend.seed;
+import com.example.expensetrackerbackend.model.Category;
 import com.example.expensetrackerbackend.model.Expense;
 import com.example.expensetrackerbackend.model.Income;
 import com.example.expensetrackerbackend.model.User;
+import com.example.expensetrackerbackend.repository.CategoryRepository;
 import com.example.expensetrackerbackend.repository.ExpenseRepository;
 import com.example.expensetrackerbackend.repository.IncomeRepository;
 import com.example.expensetrackerbackend.repository.UserRepository;
@@ -24,6 +26,9 @@ public class DataLoader implements CommandLineRunner {
     UserRepository userRepository;
 
     @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
     UserService userService;
 
     @Override
@@ -32,7 +37,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadUserData() {
-        if (expenseRepository.count() == 0 || userRepository.count() == 0) {
+        if (expenseRepository.count() == 0 || userRepository.count() == 0 || categoryRepository.count()== 0) {
             User user1 = new User(1L, "Bob", "mail1@gmail.com", "psw1");
             User user2 = new User(2L, "Tom", "mail2@gmail.com", "psw2");
             User user3 = new User(3L, "Ann", "mail3@gmail.com", "psw3");
@@ -52,12 +57,6 @@ public class DataLoader implements CommandLineRunner {
             expense4.setUser(user3);
             expense5.setUser(user3);
 
-            expenseRepository.save(expense1);
-            expenseRepository.save(expense2);
-            expenseRepository.save(expense3);
-            expenseRepository.save(expense4);
-            expenseRepository.save(expense5);
-
             Income income1 = new Income(1L, 2000.00);
             Income income2 = new Income(2L, 3000.00);
             Income income3 = new Income(3L, 7000.00);
@@ -76,7 +75,29 @@ public class DataLoader implements CommandLineRunner {
             incomeRepository.save(income4);
             incomeRepository.save(income5);
 
+            Category category1 = new Category(1L, "rent");
+            Category category2 = new Category(2L, "groceries");
+            Category category3 = new Category(3L, "transportation");
+            Category category4 = new Category(4L, "entertainment");
+            Category category5 = new Category(5L, "insurance");
 
+            categoryRepository.save(category1);
+            categoryRepository.save(category2);
+            categoryRepository.save(category3);
+            categoryRepository.save(category4);
+            categoryRepository.save(category5);
+
+            expense1.setCategory(category1);
+            expense2.setCategory(category2);
+            expense3.setCategory(category3);
+            expense4.setCategory(category4);
+            expense5.setCategory(category5);
+
+            expenseRepository.save(expense1);
+            expenseRepository.save(expense2);
+            expenseRepository.save(expense3);
+            expenseRepository.save(expense4);
+            expenseRepository.save(expense5);
         }
     }
 }
