@@ -1,7 +1,6 @@
 # Expense Tracker
 
 ## Table of Contents
-
 - [Overview](#overview)
 - [Approach](#approach)
 - [Tools and Technologies](#tools-and-technologies)
@@ -11,19 +10,17 @@
 - [Planning Documentation](#planning-documentation)
 - [Dependencies](#dependencies)
 - [Resources](#resources)
+- [Acknowledgements](#acknowledgements)
 
 ## Overview
-
 This is a full-stack expense tracker application where users are able to add their income, as well as, add, update, view, and delete their expenses. It categorizes expenses by categories and allows users to better analyze their spending patterns.
 
 ## Approach
-
 I first began by brainstorming the models needed (User, Expense, Income, and Category). Once models were decided on I created and ERD diagram showing the one-to-many and many-to-one relationships between the models and writing User Stories.
 
 After creating models, in Spring Boot, I began implementing tests using Cucumber and Rest assured. Once all the scenerios were created, I implemented services, repositories and controllers to test each CRUD method one-by-one, ensuring that I was getting the expected results both in IntelliJ and in Postman.
 
 ## Tools and Technologies
-
 - Java
 - IntelliJ - IDE
 - Spring Boot
@@ -48,7 +45,6 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 - As a user, I want to be able to delete an income entry that is no longer needed.
 
 ## ERD Diagram
-
 <img src="erd-diagram.png" style="height: 30rem;">
 
 ## API Endpoints
@@ -72,7 +68,6 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 ## Planning Documentation
 
 ## Dependencies
-
 ```
 <dependency>
 	<groupId>org.springframework.boot</groupId>
@@ -160,3 +155,9 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 ```
 
 ## Resources
+- Stack Overflow
+- Code from previous API projects: Coffee API and Real-Estate API
+
+## Acknowledgements
+Big thanks to [Maksym Zinchenko](https://github.com/maklaut007) and [Obinna Umerah](https://github.com/ObinnaUmerah) for their help and support throughout this project. 
+
