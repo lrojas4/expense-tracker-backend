@@ -83,7 +83,7 @@ public class ExpenseController {
      * @param categoryId category id we are searching for
      * @return a list of expenses by category id
      */
-    @GetMapping(path = "/category/{categoryId}/expenses/")
+    @GetMapping(path = "/categories/{categoryId}/expenses/")
     public List<Expense> getExpensesByCategoryId(@PathVariable Long categoryId) {
         return expenseService.getExpensesByCategoryId(categoryId);
 
