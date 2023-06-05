@@ -45,24 +45,26 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 - As a user, I want to be able to search for specific expenses based on keywords, date, or category.
 
 ## ERD Diagram
-<img src="erd-diagram.png" style="height: 30rem;">  
+
+<img src="erd-diagram.png" style="height: 30rem;">
 
 ## API Endpoints
 
-| Request Type | URL                          | Functionality              | Access  |
-| ------------ | ---------------------------- | -------------------------- | ------- |
-| POST         | /api/auth/login/             | User login                 | Public  |
-| POST         | /api/auth/register/          | User registration          | Public  |
-| POST         | /api/expenses/               | Creates expense entry      | Private |
-| GET          | /api/expenses/user/{userId}/ | Gets expenses by user id   | Private |
-| GET          | /api/expenses/{expenseId}/   | Gets expense by expense id | Private |
-| PUT          | /api/expense/{expenseId}/    | Updates expense entry      | Private |
-| DELETE       | /api/expense/{expenseId}/    | Deletes expense entry      | Private |
-| POST         | /api/incomes/                | Creates income entry       | Private |
-| GET          | /api/incomes/user/{userId}/  | Gets incomes by user id    | Private |
-| GET          | /api/incomes/{incomeId}/     | Gets income by income id   | Private |
-| PUT          | /api/income/{incomeId}/      | Updates income entry       | Private |
-| DELETE       | /api/income/{incomeId}/      | Delete income entry        | Private |
+| Request Type | URL                                    | Functionality                | Access  |
+| ------------ | -------------------------------------- | ---------------------------- | ------- |
+| POST         | /api/auth/login/                       | User login                   | Public  |
+| POST         | /api/auth/register/                    | User registration            | Public  |
+| POST         | /api/expenses/                         | Creates expense entry        | Private |
+| GET          | /api/expenses/user/{userId}/           | Gets expenses by user id     | Private |
+| GET          | /api/expenses/{expenseId}/             | Gets expense by expense id   | Private |
+| PUT          | /api/expense/{expenseId}/              | Updates expense entry        | Private |
+| DELETE       | /api/expense/{expenseId}/              | Deletes expense entry        | Private |
+| POST         | /api/incomes/                          | Creates income entry         | Private |
+| GET          | /api/incomes/user/{userId}/            | Gets incomes by user id      | Private |
+| GET          | /api/incomes/{incomeId}/               | Gets income by income id     | Private |
+| PUT          | /api/income/{incomeId}/                | Updates income entry         | Private |
+| DELETE       | /api/income/{incomeId}/                | Delete income entry          | Private |
+| GET          | /api/categories/{categoryId}/expenses/ | Gets expenses by category id | Private |
 
 ## Planning Documentation
 
