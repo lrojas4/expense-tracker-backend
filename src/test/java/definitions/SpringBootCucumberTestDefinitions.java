@@ -182,10 +182,16 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     @Given("A list of incomes are available")
-    public void aListOfIncomesAreAvailable() {
+    public void aListOfIncomesAreAvailable() throws JSONException {
         try {
+            String jwtKey = getSecurityKey();
+            JSONObject requestBody = new JSONObject();
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "Bearer " + jwtKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> request = new HttpEntity<String>(requestBody.toString(), headers);
             ResponseEntity<String> response = new RestTemplate()
-                    .exchange(BASE_URL + port + "/api/incomes/", HttpMethod.GET, null, String.class);
+                    .exchange(BASE_URL + port + "/api/incomes/", HttpMethod.GET, request, String.class);
             List<Map<String, String>> expenses = JsonPath
                     .from(String.valueOf(response
                             .getBody()))
@@ -198,9 +204,10 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     @When("I search for one income by id")
-    public void iSearchForOneIncomeById() {
+    public void iSearchForOneIncomeById() throws JSONException {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
         request.header("Content-Type", "application/json");
         response = request.get(BASE_URL + port + "/api/incomes/1/");
         Assert.assertNotNull(response.body());
@@ -259,6 +266,23 @@ public class SpringBootCucumberTestDefinitions {
     public void theIncomeIsUpdated() {
         Assert.assertEquals(200, response.getStatusCode());
         Assert.assertNotNull(response.body());
+    }
+
+
+    @When("I search for expenses by category id")
+    public void iSearchForExpensesByCategoryId() throws JSONException{
+        RestAssured.baseURI = BASE_URL;
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
+        request.header("Content-Type", "application/json");
+        response = request.get(BASE_URL + port + "/api/category/1/expenses/");
+
+    }
+
+    @Then("A list of expenses by category is displayed")
+    public void aListOfExpensesByCategoryIsDisplayed() {
+        Assert.assertNotNull(response.body());
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
     @When("I delete an income from income list")

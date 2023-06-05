@@ -8,7 +8,6 @@ import com.example.expensetrackerbackend.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -103,6 +102,21 @@ public class ExpenseService {
             return "Expense with id " + expenseId + " was deleted";
         } else {
             throw new InformationNotFoundException("Expense with id: " + expenseId + " doesn't exist");
+        }
+    }
+
+    /**
+     * Gets Expenses by Category id
+     * @param categoryId category id we are searching for
+     * @return a list of expenses by category
+     */
+
+    public List<Expense> getExpensesByCategoryId(Long categoryId) {
+        Optional<List<Expense>> expenses = expenseRepository.findAllByUserIdAndCategoryId(getCurrentLoggedInUser().getId(), categoryId);
+        if(expenses.isPresent()) {
+            return expenses.get();
+        } else {
+            throw new InformationNotFoundException("Expenses for user: " + getCurrentLoggedInUser().getId() + " in category " + categoryId + " doesn't exist");
         }
     }
 }
