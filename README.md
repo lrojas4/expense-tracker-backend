@@ -45,6 +45,7 @@ After creating models, in Spring Boot, I began implementing tests using Cucumber
 - As a user, I want to be able to search for specific expenses based on keywords, date, or category.
 
 ## ERD Diagram
+<img src="erd-diagram.png" style="height: 30rem;">  
 
 ## API Endpoints
 
