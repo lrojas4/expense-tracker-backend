@@ -23,14 +23,6 @@ public class ExpenseService {
     }
 
     /**
-     * Gets a list of expenses
-     * @return a list of expenses
-     */
-    public List<Expense> getExpenses() {
-        return expenseRepository.findAll();
-    }
-
-    /**
      * Get the current logged-in user from jwt
      * @return logged-in user
      */
@@ -38,6 +30,16 @@ public class ExpenseService {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getUser();
     }
+
+    /**
+     * Gets a list of expenses
+     * @return a list of expenses
+     */
+    public List<Expense> getExpenses() {
+        User user = getCurrentLoggedInUser();
+        return expenseRepository.findAllByUserId(user.getId()).get();
+    }
+
 
     /**
      * Filters a list of expenses by user id
@@ -55,9 +57,9 @@ public class ExpenseService {
      * @return expense based on id
      */
     public Expense getExpense(Long expenseId) {
-        return expenseRepository.findById(expenseId).orElse(null);
+        User user = getCurrentLoggedInUser();
+        return expenseRepository.findByIdAndUserId(expenseId, user.getId()).orElse(null);
     }
-
 
     /**
      * Creates expense object

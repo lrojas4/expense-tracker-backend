@@ -38,9 +38,9 @@ public class DataLoader implements CommandLineRunner {
 
     private void loadUserData() {
         if (expenseRepository.count() == 0 || userRepository.count() == 0 || categoryRepository.count()== 0) {
-            User user1 = new User(1L, "Bob", "mail1@gmail.com", "psw1");
-            User user2 = new User(2L, "Tom", "mail2@gmail.com", "psw2");
-            User user3 = new User(3L, "Ann", "mail3@gmail.com", "psw3");
+            User user1 = new User(1L, "Bob", "bob1@gmail.com", "psw1");
+            User user2 = new User(2L, "Tom", "tom2@gmail.com", "psw2");
+            User user3 = new User(3L, "Ann", "ann3@gmail.com", "psw3");
             userService.registerUser(user1);
             userService.registerUser(user2);
             userService.registerUser(user3);
