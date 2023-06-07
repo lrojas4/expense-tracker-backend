@@ -1,5 +1,6 @@
 package definitions;
 import com.example.expensetrackerbackend.ExpenseTrackerBackendApplication;
+import groovy.json.JsonException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -40,7 +41,7 @@ public class SpringBootCucumberTestDefinitions {
     public String getSecurityKey() throws JSONException {
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "mail1@gmail.com");
+        requestBody.put("email", "bob1@gmail.com");
         requestBody.put("password", "psw1");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login/");
@@ -83,10 +84,16 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     @Given("A list of expenses are available")
-    public void aListOfExpensesAreAvailable() {
+    public void aListOfExpensesAreAvailable() throws JSONException {
         try {
+            String jwtKey = getSecurityKey();
+            JSONObject requestBody = new JSONObject();
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "Bearer " + jwtKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> request = new HttpEntity<String>(requestBody.toString(), headers);
             ResponseEntity<String> response = new RestTemplate()
-                    .exchange(BASE_URL + port + "/api/expenses/", HttpMethod.GET, null, String.class);
+                    .exchange(BASE_URL + port + "/api/expenses/", HttpMethod.GET, request, String.class);
             List<Map<String, String>> expenses = JsonPath
                     .from(String.valueOf(response
                             .getBody()))
@@ -99,9 +106,10 @@ public class SpringBootCucumberTestDefinitions {
     }
 
     @When("I search for one expense by id")
-    public void iSearchForOneExpenseById() {
+    public void iSearchForOneExpenseById() throws JSONException {
         RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+        String jwtKey = getSecurityKey();
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + jwtKey);
         request.header("Content-Type", "application/json");
         response = request.get(BASE_URL + port + "/api/expenses/1/");
         Assert.assertNotNull(response.body());
